@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="/../static/css/message.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>GSD Parking — Register</title>
+    <style>
+        * { padding: 0; margin: 0; box-sizing: border-box; }
+
+        body {
+            background: #eef4ff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(#2563eb08 1px, transparent 1px),
+                linear-gradient(90deg, #2563eb08 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        /* Glow blobs */
+        .blob1, .blob2 {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .blob1 {
+            width: 500px; height: 500px;
+            background: #bfdbfe;
+            top: -150px; left: -150px;
+            opacity: 0.5;
+            animation: pulse 6s ease-in-out infinite;
+        }
+        .blob2 {
+            width: 400px; height: 400px;
+            background: #93c5fd;
+            bottom: -100px; right: -100px;
+            opacity: 0.4;
+            animation: pulse 8s ease-in-out infinite reverse;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .maincontainer {
+            position: relative;
+            width: 420px;
+            background: #ffffff;
+            border: 2px solid;
+            box-shadow: 0 20px 60px rgba(37,99,235,0.12), 0 4px 16px rgba(0,0,0,0.06);
+            overflow: hidden;
+            border-radius: 10px;
+            max-width: calc(100vw - 24px);
+        }
+
+        /* Top accent bar */
+        .maincontainer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #2563eb, #0ea5e9, #2563eb);
+        }
+
+        .header-title {
+            padding: 32px 40px 12px;
+            text-align: center;
+        }
+
+        .header-title h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: 0.02em;
+        }
+
+        .header-title p {
+            font-size: 11px;
+            color: #94a3b8;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.1em;
+            margin-top: 4px;
+        }
+
+        .forform {
+            padding: 12px 40px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* Form fields */
+        .con {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .con label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .con input {
+            padding: 10px 14px;
+            background: #f8faff;
+            border: 1.5px solid #c7d9f5;
+            color: #0f172a;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            border-radius: 8px;
+        }
+
+        .con input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+            background: #ffffff;
+        }
+
+        .con input::placeholder { color: #cbd5e1; }
+
+        /* Show password */
+        .showpass {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .showpass label {
+            font-size: 12px;
+            color: #64748b;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .showpass input[type=checkbox] {
+            width: 14px; height: 14px;
+            accent-color: #2563eb;
+            cursor: pointer;
+        }
+
+        /* Login Redirect Link */
+        .login-redirect {
+            text-align: right;
+            font-size: 12px;
+            font-family: 'Space Mono', monospace;
+            color: #64748b;
+            margin-top: -2px;
+        }
+
+        .login-redirect a {
+            color: #2563eb;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .login-redirect a:hover {
+            color: #0ea5e9;
+            text-decoration: underline;
+        }
+
+        /* Submit button */
+        .submit { margin-top: 4px; }
+
+        .submit button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #2563eb, #0ea5e9);
+            border: none;
+            color: #ffffff;
+            font-family: 'Syne', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+        }
+
+        .submit button:hover {
+            box-shadow: 0 6px 22px rgba(37,99,235,0.4);
+            transform: translateY(-1px);
+        }
+
+        .submit button:active { transform: scale(0.99); }
+        .submit button:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .in {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .rotate { animation: rotate 0.8s infinite linear; }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Bottom tag */
+        .tag {
+            text-align: center;
+            padding: 12px;
+            background: #f5f9ff;
+            border-top: 1px solid #ddeaff;
+            font-size: 10px;
+            color: #94a3b8;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.1em;
+        }
+
+        @media(max-width:500px){
+            .maincontainer{
+                scale: 0.85;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blob1"></div>
+    <div class="blob2"></div>
+
+    <div class="maincontainer">
+        <div class="header-title">
+            <h3>USER Account</h3>
+            <p>GSD PARKING SYSTEM</p>
+        </div>
+
+        <form id="signup" class="forform" onsubmit="onSignup(event)">
+            <div class="con">
+                <label for="un">Username</label>
+                <input id="un" type="text" placeholder="Enter username" required>
+            </div>
+
+            <div class="con">
+                <label for="email">Email Address</label>
+                <input id="email" type="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="con">
+                <label for="pwd">Password</label>
+                <input id="pwd" type="password" placeholder="Create password" required>
+            </div>
+
+            <div class="con">
+                <label for="cpwd">Confirm Password</label>
+                <input id="cpwd" type="password" placeholder="Confirm password" required>
+            </div>
+
+            <div class="showpass">
+                <input id="shwpass" type="checkbox">
+                <label for="shwpass">Show password</label>
+            </div>
+
+            <div class="login-redirect">
+                Already have an account? <a href="/user/signin">Sign In</a>
+            </div>
+
+            <div class="submit">
+                <button type="submit" id="submitBtn">
+                    <div class="in">
+                        <i class="bi bi-person-check-fill"></i>&nbsp;Register Account
+                    </div>
+                </button>
+            </div>
+        </form>
+
+        <div class="tag">GSD PARKING MONITORING v1.0 — SECURE ACCESS</div>
+    </div>
+
+    <script src="/../../static/scripts/scrit.js"></script>
+    <script>
+        document.getElementById("shwpass").addEventListener("change", (e) => {
+            let password = document.getElementById("pwd");
+            let cpassword = document.getElementById("cpwd");
+            let type = e.target.checked ? "text" : "password";
+            password.type = type;
+            cpassword.type = type;
+        });
+
+        async function onSignup(e) {
+            e.preventDefault();
+
+            let username = document.getElementById("un").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("pwd").value;
+            let cpassword = document.getElementById("cpwd").value;
+
+            if (password !== cpassword) {
+                alert("Passwords do not match");
+                return;
+            }
+
+            let comp = {
+                "username": username,
+                "email": email,
+                "password": password,
+                "cpassword": cpassword
+            };
+
+            let submitBtn = document.getElementById("submitBtn");
+            let inner = submitBtn.querySelector(".in");
+            inner.innerHTML = `<i class="bi bi-arrow-clockwise"></i>`;
+            inner.classList.add("rotate");
+            submitBtn.disabled = true;
+
+            try {
+                let res = await API.signup(comp);
+                showMessageModal(res.message,res.status);
+                if( res.status === "good"){
+                    document.getElementById("signup").reset();
+                }
+
+                console.log(res);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                inner.innerHTML = `<i class="bi bi-person-check-fill"></i>&nbsp;Register Account`;
+                inner.classList.remove("rotate");
+                submitBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+
+</html>
